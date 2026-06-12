@@ -10,21 +10,18 @@ export const metadata: Metadata = {
 
 const services = [
   {
-    icon: '📷',
     title: 'Street Sessions',
     description:
       'Candid, editorial street photography that captures the pulse of urban life. Perfect for personal branding, editorial use, or artistic expression in real-world environments.',
     startingPrice: '$150',
   },
   {
-    icon: '🎉',
     title: 'Event Coverage',
     description:
       'Full event documentation — parties, graduations, campus events, and social gatherings. Delivered as a curated gallery of high-resolution images within 7 days.',
     startingPrice: '$300',
   },
   {
-    icon: '🎓',
     title: 'College Packages',
     description:
       'Campus portraits, Greek life events, student org coverage, and more. Tailored packages for students and organizations who need professional imagery on a student budget.',

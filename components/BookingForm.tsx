@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import { sendBooking, type BookingData } from '@/actions/sendBooking'
+import DateTimeBooking from './DateTimeBooking'
 
 const shootTypes = ['Street Session', 'Event Coverage', 'College Package', 'Other']
+const bookingAreas = ['Orlando', 'Daytona Beach', 'Tampa', 'Winter Park', 'Kissimmee', 'Sanford', 'Deltona', 'Lakeland', 'Melbourne', 'Cocoa Beach', 'Clearwater', 'Saint Petersburg', 'Other City']
 
 const inputClass =
   'w-full bg-surface border border-white/10 text-foreground px-4 py-3 focus:outline-none focus:border-accent transition-colors placeholder:text-foreground/20'
@@ -14,9 +16,13 @@ export default function BookingForm() {
     email: '',
     phone: '',
     shootType: '',
+    bookingArea: '',
     preferredDate: '',
+    preferredTime: '',
     message: '',
   })
+  const [customCity, setCustomCity] = useState('')
+  const [customShootType, setCustomShootType] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
@@ -29,7 +35,13 @@ export default function BookingForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus('loading')
-    const result = await sendBooking(form)
+    // If "Other City" is selected, use the custom city name
+    const finalForm = {
+      ...form,
+      bookingArea: form.bookingArea === 'Other City' ? customCity : form.bookingArea,
+      shootType: form.shootType === 'Other' ? customShootType : form.shootType,
+    }
+    const result = await sendBooking(finalForm)
     if (result.success) {
       setStatus('success')
     } else {
@@ -82,20 +94,61 @@ export default function BookingForm() {
             ))}
           </select>
         </div>
+        {form.shootType === 'Other' && (
+          <div>
+            <label className="block text-xs tracking-widest uppercase text-foreground/40 mb-2">
+              Enter Shoot Type *
+            </label>
+            <input
+              type="text"
+              value={customShootType}
+              onChange={(e) => setCustomShootType(e.target.value)}
+              placeholder="e.g., Branding Session, Music Promo"
+              required={form.shootType === 'Other'}
+              className={inputClass}
+            />
+          </div>
+        )}
         <div>
           <label className="block text-xs tracking-widest uppercase text-foreground/40 mb-2">
-            Preferred Date *
+            Booking Area *
+          </label>
+          <select name="bookingArea" value={form.bookingArea} onChange={handleChange} required className={inputClass}>
+            <option value="">Select a location</option>
+            {bookingAreas.map((area) => (
+              <option key={area} value={area}>
+                {area}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Custom City Input */}
+      {form.bookingArea === 'Other City' && (
+        <div>
+          <label className="block text-xs tracking-widest uppercase text-foreground/40 mb-2">
+            Enter City Name *
           </label>
           <input
-            name="preferredDate"
-            type="date"
-            value={form.preferredDate}
-            onChange={handleChange}
-            required
+            type="text"
+            value={customCity}
+            onChange={(e) => setCustomCity(e.target.value)}
+            placeholder="e.g., Jacksonville, Gainesville"
+            required={form.bookingArea === 'Other City'}
             className={inputClass}
           />
         </div>
-      </div>
+      )}
+
+      {/* Calendar and Time Picker */}
+      <DateTimeBooking
+        selectedDate={form.preferredDate}
+        selectedTime={form.preferredTime}
+        onDateTimeSelect={(date, time) =>
+          setForm((prev) => ({ ...prev, preferredDate: date, preferredTime: time }))
+        }
+      />
 
       <div>
         <label className="block text-xs tracking-widest uppercase text-foreground/40 mb-2">

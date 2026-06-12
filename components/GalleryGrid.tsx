@@ -13,6 +13,7 @@ const tabs: { value: FilterTab; label: string }[] = [
   { value: 'street', label: 'Street' },
   { value: 'events', label: 'Events' },
   { value: 'college', label: 'College' },
+  { value: 'posters', label: 'Posters' },
 ]
 
 export default function GalleryGrid() {
@@ -26,15 +27,15 @@ export default function GalleryGrid() {
 
   return (
     <>
-      <div className="flex gap-8 justify-center mb-14">
+      <div className="flex flex-wrap justify-center gap-3 gap-y-4 mb-14 px-4 md:px-0">
         {tabs.map(({ value, label }) => (
           <button
             key={value}
             onClick={() => setActiveTab(value)}
-            className={`text-sm tracking-widest uppercase pb-1 transition-all duration-200 ${
+            className={`min-w-[5.5rem] w-full max-w-[8rem] sm:w-auto text-xs sm:text-sm tracking-widest uppercase py-2 px-3 transition-all duration-200 border rounded-full ${
               activeTab === value
-                ? 'text-accent border-b border-accent'
-                : 'text-foreground/50 hover:text-foreground'
+                ? 'text-background bg-accent border-accent shadow-[0_0_0_1px_rgba(255,255,255,0.15)]'
+                : 'text-foreground/50 border-white/10 hover:text-foreground hover:border-foreground/20 hover:bg-white/5'
             }`}
           >
             {label}

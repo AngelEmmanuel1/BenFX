@@ -1,7 +1,6 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
 import { useEffect } from 'react'
 import type { GalleryImage } from '@/lib/images'
 
@@ -31,18 +30,17 @@ export default function Lightbox({ image, onClose }: LightboxProps) {
           onClick={onClose}
         >
           <motion.div
-            className="relative w-full max-w-4xl max-h-[85vh] aspect-[4/3]"
+            className="relative w-full max-w-4xl max-h-[85vh]"
             initial={{ scale: 0.92, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.92, opacity: 0 }}
             transition={{ duration: 0.25 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <Image
+            <img
               src={image.src}
               alt={image.alt}
-              fill
-              className="object-contain"
+              className="w-full h-full object-contain"
             />
           </motion.div>
 

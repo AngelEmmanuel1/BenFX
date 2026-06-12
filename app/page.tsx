@@ -1,27 +1,22 @@
 import Hero from '@/components/Hero'
 import FadeInSection from '@/components/FadeInSection'
-import Image from 'next/image'
 import Link from 'next/link'
 import { featuredImages } from '@/lib/images'
 
 export default function HomePage() {
   return (
     <>
-      <Hero
-        imageSrc="https://picsum.photos/seed/benfx-hero/1920/1080"
-        imageAlt="BenFX Photography — street scene"
-      />
+      <Hero />
 
       {/* About */}
       <section className="py-28 px-6">
         <div className="max-w-5xl mx-auto">
           <FadeInSection className="flex flex-col md:flex-row items-center gap-14">
-            <div className="relative w-56 h-72 flex-shrink-0">
-              <Image
-                src="https://picsum.photos/seed/benfx-portrait/400/500"
+            <div className="relative w-full max-w-xs sm:max-w-sm mx-auto md:mx-0 h-72 shrink-0 border border-white p-1">
+              <img
+                src="/BenPhotos/Famu Poster.png"
                 alt="BenFX photographer portrait"
-                fill
-                className="object-cover grayscale"
+                className="w-full h-full object-cover grayscale"
               />
             </div>
             <div>
@@ -59,13 +54,12 @@ export default function HomePage() {
               <FadeInSection key={image.id} delay={i * 0.1}>
                 <Link
                   href="/portfolio"
-                  className="block relative aspect-[4/3] overflow-hidden group"
+                  className="block relative aspect-4/3 overflow-hidden group"
                 >
-                  <Image
+                  <img
                     src={image.src}
                     alt={image.alt}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex items-end p-4">
                     <span className="text-transparent group-hover:text-foreground text-xs tracking-widest uppercase font-medium transition-colors duration-300 translate-y-2 group-hover:translate-y-0">
